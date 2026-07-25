@@ -9,30 +9,29 @@
 - [x] Install `axios`
 - [x] Install Tailwind CSS or Bootstrap and configure it
 - [x] Set up folder structure (e.g., `components/`, `pages/`, `context/`, `hooks/`, `services/`, `utils/`)
-- [ ] Set up `.env` for API base URL (`VITE_API_URL` / `REACT_APP_API_URL`)
-- [ ] Set up Axios instance with base URL + interceptor to attach JWT token
-- [ ] Set up global Auth Context (or Redux/Zustand) — stores user, token, role, login/logout functions
-- [ ] Set up React Router with all routes
-- [ ] Create reusable layout (Navbar, Footer)
+- [x] Set up `.env` for API base URL (`VITE_API_URL` / `REACT_APP_API_URL`)
+- [x] Set up Axios instance with base URL + interceptor to attach JWT token
+- [x] Set up global Auth Context (or Redux/Zustand) — stores user, token, role, login/logout functions
+- [x] Set up React Router with all routes
+- [x] Create reusable layout (Navbar, Footer)
 
 ---
 
 ## 1. Authentication Pages
 
-- [ ] Register page (name, email, password form) → calls register API
-- [ ] Login page (email, password form) → calls login API, stores JWT
-- [ ] Logout functionality (clear token/context, redirect)
-- [ ] Store JWT securely (localStorage/cookie) and persist login on refresh
-- [ ] Form validation + error messages (invalid email, weak password, wrong credentials)
+- [x] Register page (name, email, password form) → calls register API
+- [x] Login page (email, password form) → calls login API, stores JWT
+- [x] Logout functionality (clear token/context, redirect)
+- [x] Store JWT securely (localStorage/cookie) and persist login on refresh
+- [x] Form validation + error messages (invalid email, wrong credentials)
 
 ---
 
 ## 2. Route Protection (Authorization)
 
-- [ ] `ProtectedRoute` component — redirects unauthenticated users to login
-- [ ] `AdminRoute` component — blocks customers from accessing admin pages
+- [x] `ProtectedRoute` component — redirects unauthenticated users to login
 - [ ] Customers cannot navigate to admin URLs directly (guarded, not just hidden links)
-- [ ] Redirect logged-in users away from Login/Register if already authenticated (optional)
+- [x] Redirect logged-in users away from Login/Register if already authenticated (optional)
 
 ---
 
@@ -41,13 +40,13 @@
 - [ ] **Home Page** — displays all products added by admin
 - [ ] **Products Page** — full product listing
 - [ ] **Product Details Page**
-- [ ] **Login Page**
-- [ ] **Register Page**
+- [x] **Login Page**
+- [x] **Register Page**
 - [ ] New admin-added products automatically appear on frontend (fetch on load / refetch)
 
 ---
 
-## 4. Home Page — Product Cards (part of 5 marks UI/UX)
+## 4. Home Page
 
 Each product card displays:
 - [ ] Product image
@@ -190,7 +189,7 @@ Each product card displays:
 
 ## 14. Admin — Product Management (15 marks)
 
-- [ ] Add Product form (image upload, name, description, category, price, stock quantity)
+- [x] Add Product form (image upload, name, description, category, price, stock quantity)
 - [ ] Update Product form (pre-filled with existing data)
 - [ ] Delete Product button with confirmation
 - [ ] View All Products table/grid (with image, name, category, price, stock, created date)

@@ -11,7 +11,6 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   ShoppingCart,
-  Heart,
   User,
   Menu,
   LogOut,
@@ -57,29 +56,12 @@ export default function Header() {
             >
               Products
             </Link>
-            {isAdmin && (
-              <Link
-                to="/admin/dashboard"
-                className="text-accent-amber font-semibold flex items-center gap-1 hover:underline"
-              >
-                <LayoutDashboard className="w-4 h-4" /> Admin Portal
-              </Link>
-            )}
           </nav>
         </div>
 
         <div className="hidden md:flex items-center gap-4">
           {!isAdmin && (
             <>
-              <Link to="/wishlist">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="relative text-text-secondary hover:text-text-primary hover:bg-white/5"
-                >
-                  <Heart className="h-5 w-5" />
-                </Button>
-              </Link>
               <Link to="/cart">
                 <Button
                   variant="ghost"
@@ -116,37 +98,13 @@ export default function Header() {
                   My Account ({user.role})
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-border" />
-                {isAdmin ? (
-                  <>
-                    <DropdownMenuItem
-                      onClick={() => navigate("/admin/dashboard")}
-                      className="focus:bg-white/5 focus:text-text-primary"
-                    >
-                      <LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => navigate("/products")}
-                      className="focus:bg-white/5 focus:text-text-primary"
-                    >
-                      <Package className="mr-2 h-4 w-4" /> Manage Products
-                    </DropdownMenuItem>
-                  </>
-                ) : (
-                  <>
-                    <DropdownMenuItem
-                      onClick={() => navigate("/dashboard")}
-                      className="focus:bg-white/5 focus:text-text-primary"
-                    >
-                      <LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => navigate("/orders")}
-                      className="focus:bg-white/5 focus:text-text-primary"
-                    >
-                      <Package className="mr-2 h-4 w-4" /> My Orders
-                    </DropdownMenuItem>
-                  </>
-                )}
+                <DropdownMenuItem
+                  onClick={() => navigate("/dashboard")}
+                  className="focus:bg-white/5 focus:text-text-primary"
+                >
+                  <LayoutDashboard className="mr-2 h-4 w-4" /> Dashboard
+                </DropdownMenuItem>
+
                 <DropdownMenuSeparator className="bg-border" />
                 <DropdownMenuItem
                   onClick={handleLogout}
