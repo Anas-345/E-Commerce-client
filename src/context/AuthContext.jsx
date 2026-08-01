@@ -7,6 +7,8 @@ export default function AuthContext({ children }) {
   const [user, setUser] = useState({});
   const [isAppLoading, setIsAppLoading] = useState(false);
 
+  const isAdmin = user?.role === "Admin";
+
   async function readProfile(token) {
     if (!token) return;
     setIsAppLoading(true);
@@ -25,7 +27,7 @@ export default function AuthContext({ children }) {
     readProfile(token);
   }, []);
   return (
-    <Auth.Provider value={{ user, setUser, readProfile, isAppLoading }}>
+    <Auth.Provider value={{ user, setUser, readProfile, isAppLoading , isAdmin}}>
       {children}
     </Auth.Provider>
   );
