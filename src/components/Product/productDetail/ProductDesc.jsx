@@ -2,8 +2,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/context/AuthContext";
-import useCart from "@/hooks/useCart";
-import useWishlist from "@/hooks/useWishlist";
+import { useCart } from "@/context/useCart";
+import { useWishlist } from "@/context/useWishlist";
 import {
   Heart,
   Minus,
@@ -13,12 +13,15 @@ import {
   ShoppingBag,
 } from "lucide-react";
 
-export default function ProductDesc({ product, quantity, setQuantity }) {
+export default function ProductDesc({ product }) {
   const { isAdmin } = useAuth();
-  const { handleAddToCart, handleDecrement, handleIncrement } = useCart();
+  const { handleAddToCart, handleDecrement, handleIncrement, cartItems } =
+    useCart();
 
   const { handleToggle, isLiked } = useWishlist();
   const like = isLiked(product.id);
+  const prod = cartItems.find((p) => p.id === product.id);
+  const qty = prod?.quantity || 0;
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -59,7 +62,7 @@ export default function ProductDesc({ product, quantity, setQuantity }) {
 
       {!isAdmin && (
         <div className="flex items-center gap-3">
-          {quantity > 0 ? (
+          {qty > 0 ? (
             <div className="flex items-center justify-between border rounded-lg p-1 bg-muted/30 flex-1 h-11">
               <Button
                 variant="outline"
@@ -67,21 +70,19 @@ export default function ProductDesc({ product, quantity, setQuantity }) {
                 className="h-9 w-9 shrink-0"
                 onClick={() => {
                   handleDecrement(product.id);
-                  setQuantity((prev) => prev - 1);
                 }}
               >
                 <Minus className="h-4 w-4" />
               </Button>
-              <span className="font-semibold text-base px-4">{quantity}</span>
+              <span className="font-semibold text-base px-4">{qty}</span>
               <Button
                 variant="outline"
                 size="icon"
                 className="h-9 w-9 shrink-0"
                 onClick={() => {
                   handleIncrement(product.id, product.stock);
-                  setQuantity((prev) => prev + 1);
                 }}
-                disabled={quantity >= product.stock}
+                disabled={qty >= product.stock}
               >
                 <Plus className="h-4 w-4" />
               </Button>
@@ -90,7 +91,7 @@ export default function ProductDesc({ product, quantity, setQuantity }) {
             <Button
               className="flex-1 gap-2 h-11 text-base font-medium"
               disabled={product.stock === 0}
-              onClick={() => handleAddToCart(product.id)}
+              onClick={() => handleAddToCart(product)}
             >
               <ShoppingBag className="h-5 w-5" /> Add to Cart
             </Button>

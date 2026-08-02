@@ -1,14 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { CardFooter } from "@/components/ui/card";
 import { useAuth } from "@/context/AuthContext";
-import useCart from "@/hooks/useCart";
+import { useCart } from "@/context/useCart";
 import { Eye, Minus, Pencil, Plus, ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router";
 
-export default function CardFoot({ product, qty }) {
-  const {isAdmin} = useAuth()
+export default function CardFoot({ product }) {
+  const { isAdmin } = useAuth();
   const navigate = useNavigate();
-  const { handleAddToCart, handleDecrement, handleIncrement } = useCart();
+  const { handleAddToCart, handleDecrement, handleIncrement, cartItems } =
+    useCart();
+
+  const prod = cartItems.find((p) => p.id === product.id);
+  const qty = prod?.quantity || 0;
   return (
     <CardFooter className="p-4 pt-0 flex gap-2">
       {isAdmin ? (
@@ -53,7 +57,7 @@ export default function CardFoot({ product, qty }) {
         <Button
           className="w-full gap-2"
           disabled={product.stock === 0}
-          onClick={() => handleAddToCart(product.id)}
+          onClick={() => handleAddToCart(product)}
         >
           <ShoppingBag className="h-4 w-4" /> Add to Cart
         </Button>

@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { TableCell } from "@/components/ui/table";
 import { useAuth } from "@/context/AuthContext";
-import useCart from "@/hooks/useCart";
-import useWishlist from "@/hooks/useWishlist";
+import { useCart } from "@/context/useCart";
+import { useWishlist } from "@/context/useWishlist";
 import {
   Eye,
   Heart,
@@ -14,12 +14,15 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router";
 
-export default function TableActions({ qty, product, setDeletingProduct }) {
+export default function TableActions({ product, setDeletingProduct }) {
   const navigate = useNavigate();
-  const { handleAddToCart, handleDecrement, handleIncrement } = useCart();
+  const { handleAddToCart, handleDecrement, handleIncrement, cartItems } =
+    useCart();
   const { isAdmin } = useAuth();
   const { handleToggle, isLiked } = useWishlist();
   const like = isLiked(product.id);
+  const prod = cartItems.find((p) => p.id === product.id);
+  const qty = prod?.quantity || 0;
   return (
     <TableCell className="text-right">
       <div className="flex justify-end items-center gap-1.5">
@@ -91,7 +94,7 @@ export default function TableActions({ qty, product, setDeletingProduct }) {
           <Button
             size="sm"
             disabled={product.stock === 0}
-            onClick={() => handleAddToCart(product.id)}
+            onClick={() => handleAddToCart(product)}
           >
             <ShoppingBag className="h-3.5 w-3.5 mr-1.5" /> Add
           </Button>

@@ -15,16 +15,15 @@ import {
   Menu,
   LogOut,
   LayoutDashboard,
-  Package,
   Store,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { useCart } from "@/context/useCart";
 
 export default function Header() {
   const navigate = useNavigate();
-  const { user, setUser } = useAuth();
-  const cartItemCount = 3;
-  const isAdmin = user?.role === "Admin";
+  const { user, setUser, isAdmin } = useAuth();
+  const { totalItems } = useCart();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -69,9 +68,9 @@ export default function Header() {
                   className="relative text-text-secondary hover:text-text-primary hover:bg-white/5"
                 >
                   <ShoppingCart className="h-5 w-5" />
-                  {cartItemCount > 0 && (
+                  {totalItems > 0 && (
                     <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-glow-primary">
-                      {cartItemCount}
+                      {totalItems}
                     </span>
                   )}
                 </Button>
@@ -141,9 +140,9 @@ export default function Header() {
               className="relative cursor-pointer text-text-secondary hover:text-text-primary hover:bg-white/5"
             >
               <ShoppingCart className="h-5 w-5" />
-              {cartItemCount > 0 && (
+              {totalItems > 0 && (
                 <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-glow-primary">
-                  {cartItemCount}
+                  {totalItems}
                 </span>
               )}
             </Button>

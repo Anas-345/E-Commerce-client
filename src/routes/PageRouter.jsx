@@ -14,6 +14,7 @@ import Users from "@/pages/Users";
 import All from "@/pages/Products/All";
 import Add from "@/pages/Products/Add";
 import ProductDetails from "@/pages/Products/ProductDetail";
+import Checkout from "@/pages/Checkout";
 
 export default function PageRouter() {
   return (
@@ -22,6 +23,7 @@ export default function PageRouter() {
         <Route index element={<Home />} />
         <Route path="products" element={<All />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="checkout" element={<Checkout />} />
         <Route path="product/:id" element={<ProductDetails />} />
         <Route path="auth" element={<Auth />}>
           <Route path="register" element={<Register />} />

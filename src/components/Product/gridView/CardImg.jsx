@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
-import useWishlist from "@/hooks/useWishlist";
+import { useWishlist } from "@/context/useWishlist";
 import { Eye, Heart } from "lucide-react";
 import { useNavigate } from "react-router";
 

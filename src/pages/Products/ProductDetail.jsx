@@ -14,8 +14,6 @@ export default function ProductDetails() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const [quantity, setQuantity] = useState(0);
-
   async function fetchProduct() {
     setLoading(true);
     const data = await singleProduct(id);
@@ -40,11 +38,7 @@ export default function ProductDetails() {
       <ProductActions />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         <ProductImg product={product} />
-        <ProductDesc
-          product={product}
-          quantity={quantity}
-          setQuantity={setQuantity}
-        />
+        <ProductDesc product={product} />
       </div>
 
       <ProductOverview product={product} />
