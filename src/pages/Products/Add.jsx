@@ -5,6 +5,7 @@ import {
   Image as ImageIcon,
   ArrowLeft,
   Loader2,
+  Upload,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -38,9 +39,10 @@ export default function Add() {
     category: "",
     price: "",
     stock: "",
-    imageUrl: "",
+    imageFile: null, // Stores the uploaded File object
   });
 
+  const [previewUrl, setPreviewUrl] = useState(""); // Stores preview URL (Blob or existing image URL)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -51,10 +53,21 @@ export default function Add() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
+  // Handle local File Selection
+  function handleFileChange(e) {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFormData((prev) => ({ ...prev, imageFile: file }));
+      setPreviewUrl(URL.createObjectURL(file)); // Create local temporary URL for preview
+    }
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     const { category } = formData;
     if (!category) return toast.error("Select Category");
+    if (!id && !formData.imageFile) return toast.error("Please upload an image");
+
     setLoading(true);
 
     const res = await (!id
@@ -71,7 +84,12 @@ export default function Add() {
       return;
     }
     const product = await singleProduct(id);
-    setFormData((prev) => ({ ...prev, ...product }));
+    if (product) {
+      setFormData((prev) => ({ ...prev, ...product }));
+      if (product.imageUrl) {
+        setPreviewUrl(product.imageUrl); // Fallback if editing existing product with hosted URL
+      }
+    }
     setIsPageLoading(false);
   }
 
@@ -187,38 +205,39 @@ export default function Add() {
                   />
                 </div>
 
+                {/* --- FILE UPLOAD FIELD --- */}
                 <div className="space-y-2">
-                  <Label htmlFor="imageUrl">Product Image URL</Label>
+                  <Label htmlFor="imageUpload">Product Image</Label>
                   <div className="flex gap-3">
                     <Input
-                      id="imageUrl"
-                      name="imageUrl"
-                      type="url"
-                      placeholder="https://images.unsplash.com/photo-..."
-                      value={formData.imageUrl}
-                      onChange={handleChange}
-                      required
+                      id="imageUpload"
+                      name="imageUpload"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      required={!id && !previewUrl}
+                      className="cursor-pointer"
                     />
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Provide a direct link to an image. (File upload capability
-                    can be added later)
+                    Upload a JPEG, PNG, or WebP image file.
                   </p>
                 </div>
 
-                {formData.imageUrl && (
+                {/* --- IMAGE PREVIEW --- */}
+                {previewUrl && (
                   <div className="border rounded-lg p-3 bg-muted/30 space-y-2">
                     <Label className="text-xs text-muted-foreground flex items-center gap-1.5">
                       <ImageIcon className="h-3.5 w-3.5" /> Image Preview
                     </Label>
                     <div className="h-48 w-full rounded-md overflow-hidden bg-background border flex items-center justify-center">
                       <img
-                        src={formData.imageUrl}
+                        src={previewUrl}
                         alt="Preview"
                         className="h-full w-full object-contain"
                         onError={(e) => {
                           e.currentTarget.src =
-                            "https://placehold.co/600x400?text=Invalid+Image+URL";
+                            "https://placehold.co/600x400?text=Invalid+Image";
                         }}
                       />
                     </div>

@@ -8,7 +8,25 @@ const API_URL = `${VITE_API_URL}/product`
 async function addProduct(product) {
     try {
         const token = localStorage.getItem('token')
-        const res = await axios.post(`${API_URL}/add`, product, { headers: { Authorization: `Bearer ${token}` } })
+
+        // 💥 Construct FormData to send files + text fields
+        const formData = new FormData()
+        formData.append('name', product.name)
+        formData.append('description', product.description)
+        formData.append('category', product.category)
+        formData.append('price', product.price)
+        formData.append('stock', product.stock)
+
+        if (product.imageFile) {
+            formData.append('image', product.imageFile)
+        }
+
+        const res = await axios.post(`${API_URL}/add`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data', // 👈 Crucial header!
+            }
+        })
         toast.success(res.data.message)
         return true
     } catch (error) {
@@ -20,7 +38,24 @@ async function addProduct(product) {
 async function updateProduct(product, id) {
     try {
         const token = localStorage.getItem('token')
-        const res = await axios.put(`${API_URL}/update/${id}`, product, { headers: { Authorization: `Bearer ${token}` } })
+
+        const formData = new FormData()
+        formData.append('name', product.name)
+        formData.append('description', product.description)
+        formData.append('category', product.category)
+        formData.append('price', product.price)
+        formData.append('stock', product.stock)
+
+        if (product.imageFile) {
+            formData.append('image', product.imageFile)
+        }
+
+        const res = await axios.put(`${API_URL}/update/${id}`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data',
+            }
+        })
         toast.success(res.data.message)
         return true
     } catch (error) {
