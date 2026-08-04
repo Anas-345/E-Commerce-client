@@ -16,6 +16,7 @@ import Add from "@/pages/Products/Add";
 import ProductDetails from "@/pages/Products/ProductDetail";
 import Checkout from "@/pages/Checkout";
 import AdminRoutes from "./AdminRoutes";
+import PageNotFound from "@/pages/PageNotFound";
 
 export default function PageRouter() {
   return (
@@ -50,6 +51,7 @@ export default function PageRouter() {
           <Route path="cart" element={<Cart />} />
         </Route>
       </Route>
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 }

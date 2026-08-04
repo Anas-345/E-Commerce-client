@@ -77,9 +77,6 @@ export default function Add() {
                         <SelectItem value="clothing">Clothing</SelectItem>
                         <SelectItem value="home">Home & Kitchen</SelectItem>
                         <SelectItem value="beauty">Beauty & Care</SelectItem>
-                        <SelectItem value="sports">
-                          Sports & Outdoors
-                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
