@@ -1,43 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PackageX } from "lucide-react";
-import { allProducts, deleteProduct } from "@/services/products";
-import { toast } from "sonner";
 import ProductHeader from "@/components/Product/ProductHeader";
 import ProductFilter from "@/components/Product/ProductFilter";
 import Loader from "@/components/Loader";
 import EmptyState from "@/components/EmptyState";
 import ProductBody from "@/components/Product/ProductBody";
 import DialogBox from "@/components/DialogBox";
+import useProducts from "@/hooks/useProducts";
 
 export default function All() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState("grid");
-  const [deleting, setDeleting] = useState(false);
-  const [deletingProduct, setDeletingProduct] = useState(null);
 
-  async function handleDeleteProduct() {
-    setDeleting(true);
-    const res = await deleteProduct(deletingProduct);
-    setDeletingProduct(null);
-    if (!res) {
-      setDeleting(false);
-      return;
-    }
-    setDeleting(false);
-    toast.success("Item deleted successfully");
-    getProducts();
-  }
-
-  async function getProducts() {
-    const res = await allProducts();
-    setProducts(res);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    getProducts();
-  }, []);
+  const {
+    loading,
+    products,
+    deleting,
+    handleDeleteProduct,
+    deletingProduct,
+    setDeletingProduct,
+  } = useProducts();
 
   return (
     <div className="space-y-6">

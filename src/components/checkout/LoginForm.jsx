@@ -6,13 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 import { handleLogin } from "@/services/auth";
 import { useState } from "react";
+import InputField from "../InputField";
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -51,32 +50,32 @@ export default function LoginForm() {
       <CardContent>
         <form onSubmit={handleClick} className="space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="space-y-1">
-              <Label htmlFor="login-email" className="text-xs">
-                Email
-              </Label>
-              <Input
-                id="login-email"
-                type="email"
-                placeholder="user@example.com"
-                name="email"
-                value={user.email}
-                onChange={handleChange}
+            {[
+              {
+                name: "Email",
+                id: "email",
+                type: "email",
+                value: user.email,
+                placeholder: "user@example.com",
+              },
+              {
+                name: "Password",
+                id: "password",
+                type: "password",
+                value: user.password,
+                placeholder: "••••••••",
+              },
+            ].map((o, i) => (
+              <InputField
+                key={i}
+                name={o.name}
+                id={o.id}
+                type={o.type}
+                value={o.value}
+                placeholder={o.placeholder}
+                handleChange={handleChange}
               />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="login-pass" className="text-xs">
-                Password
-              </Label>
-              <Input
-                id="login-pass"
-                type="password"
-                placeholder="••••••••"
-                name="password"
-                value={user.password}
-                onChange={handleChange}
-              />
-            </div>
+            ))}
           </div>
           <Button
             type="submit"

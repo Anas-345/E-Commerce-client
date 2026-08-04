@@ -5,13 +5,15 @@ const Auth = createContext();
 
 export default function AuthContext({ children }) {
   const [user, setUser] = useState({});
-  const [isAppLoading, setIsAppLoading] = useState(false);
+  const [isAppLoading, setIsAppLoading] = useState(true);
 
   const isAdmin = user?.role === "Admin";
 
   async function readProfile(token) {
-    if (!token) return;
-    setIsAppLoading(true);
+    if (!token) {
+      setIsAppLoading(false);
+      return;
+    }
     const data = await handleProfile(token);
     if (!data) {
       setUser({});
@@ -27,7 +29,9 @@ export default function AuthContext({ children }) {
     readProfile(token);
   }, []);
   return (
-    <Auth.Provider value={{ user, setUser, readProfile, isAppLoading , isAdmin}}>
+    <Auth.Provider
+      value={{ user, setUser, readProfile, isAppLoading, isAdmin }}
+    >
       {children}
     </Auth.Provider>
   );

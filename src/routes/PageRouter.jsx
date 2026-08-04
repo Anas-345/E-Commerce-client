@@ -15,6 +15,7 @@ import All from "@/pages/Products/All";
 import Add from "@/pages/Products/Add";
 import ProductDetails from "@/pages/Products/ProductDetail";
 import Checkout from "@/pages/Checkout";
+import AdminRoutes from "./AdminRoutes";
 
 export default function PageRouter() {
   return (
@@ -36,12 +37,16 @@ export default function PageRouter() {
           <Route path="products">
             <Route index element={<Navigate to="all" replace />} />
             <Route path="all" element={<All />} />
-            <Route path="add" element={<Add />} />
-            <Route path="edit/:id" element={<Add />} />
+            <Route element={<AdminRoutes />}>
+              <Route path="add" element={<Add />} />
+              <Route path="edit/:id" element={<Add />} />
+            </Route>
           </Route>
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="orders" element={<Orders />} />
-          <Route path="users" element={<Users />} />
+          <Route element={<AdminRoutes />}>
+            <Route path="users" element={<Users />} />
+          </Route>
           <Route path="cart" element={<Cart />} />
         </Route>
       </Route>

@@ -3,10 +3,10 @@ import { useAuth } from "@/context/AuthContext";
 import Loader from "@/components/Loader";
 import EmptyOrder from "@/components/order/EmptyOrder";
 import { allOrders } from "@/services/order";
-import OrderHeader from "@/components/order/OrderHeader";
 import OrderOwnerView from "@/components/order/OrderOwnerView";
 import OrderCustomerView from "@/components/order/OrderCustomerView";
 import OrderDetails from "@/components/order/OrderDetails";
+import PagesHeader from "@/components/PagesHeader";
 
 export default function Orders() {
   const { user, isAdmin } = useAuth();
@@ -49,15 +49,26 @@ export default function Orders() {
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto pb-10">
-      <OrderHeader />
+      <PagesHeader
+        header={isAdmin ? "Order Management" : "My Orders"}
+        content={
+          isAdmin
+            ? "View and manage all customer orders, status, and shipping info."
+            : "Track and manage your order history."
+        }
+      />
 
       {isAdmin ? (
-        <OrderOwnerView orders={orders} setSelectedOrder={setSelectedOrder} setOrders={setOrders} />
+        <OrderOwnerView
+          orders={orders}
+          setSelectedOrder={setSelectedOrder}
+          setOrders={setOrders}
+        />
       ) : (
         <div className="space-y-6 max-w-4xl mx-auto">
           {orders.map((order) => (
             <OrderCustomerView
-            key={order.id}
+              key={order.id}
               order={order}
               getStatusBadgeVariant={getStatusBadgeVariant}
             />
