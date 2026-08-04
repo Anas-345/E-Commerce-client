@@ -3,6 +3,7 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import InputField from "../InputField";
 import useCheckout from "@/hooks/useCheckout";
+import { Input } from "../ui/input";
 
 export default function CheckoutForm({ setSubmitting }) {
   const { formData, handleChange, handlePlaceOrder } = useCheckout();
@@ -84,16 +85,17 @@ export default function CheckoutForm({ setSubmitting }) {
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <InputField
-              type="text"
-              id="postalCode"
-              name="Postal Code (Optional)"
-              placeholder="0000"
-              value={formData.postalCode}
-              handleChange={handleChange}
-            />
+            <div className="space-y-2">
+              <Label htmlFor="postalCode">Postal Code (Optional)</Label>
+              <Input
+                id="postalCode"
+                name="postalCode"
+                placeholder="0000"
+                value={formData.postalCode}
+                onChange={handleChange}
+              />
+            </div>
           </div>
-
           <div className="space-y-1.5">
             <Label htmlFor="notes">Order Notes (Optional)</Label>
             <Textarea
