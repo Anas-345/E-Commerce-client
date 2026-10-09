@@ -15,8 +15,8 @@ export default function UserFilters() {
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-card p-3 rounded-xl border">
-      <div className="flex items-center gap-3 w-full sm:w-auto flex-1">
-        <div className="relative flex-1 sm:max-w-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto flex-1">
+        <div className="relative w-full sm:flex-1 sm:max-w-xs min-w-0">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search by name or email..."
@@ -27,7 +27,7 @@ export default function UserFilters() {
         </div>
 
         <Select value={roleFilter} onValueChange={setRoleFilter}>
-          <SelectTrigger className="w-40">
+          <SelectTrigger className="w-full sm:w-40">
             <div className="flex items-center gap-2">
               <SlidersHorizontal className="h-3.5 w-3.5" />
               <SelectValue placeholder="Role Filter" />
